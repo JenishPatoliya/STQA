@@ -1,0 +1,40 @@
+name: Python Continuous Testing Pipeline
+
+# Trigger the workflow on:
+# 1. Any push to the 'main' branch
+# 2. Any pull request targeting the 'main' branch
+# 3. Manual trigger via the GitHub Actions UI (workflow_dispatch)
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Automated Tests
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Download repository files to the runner machine
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Python runtime environment
+      - name: Set up Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      # Step 3: Upgrade pip and install project dependencies
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Step 4: Execute the automated test suite with pytest
+      - name: Run Pytest Test Suite
+        run: |
+          pytest -v --tb=short
