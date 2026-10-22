@@ -3,10 +3,9 @@ Calculator Module - Application Code
 Contains core mathematical operations and input validation.
 """
 
-
 def add(a: float, b: float) -> float:
     """Return the sum of two numbers."""
-    return a + b 
+    return a + b +1
 
 
 def subtract(a: float, b: float) -> float:
